@@ -1,5 +1,30 @@
-.section vectors
-.global _vectors
+.section .text
+.global asm_entry
+asm_entry:
+    mov r0, #0x0
+    ldr r1, =_vectors
+    ldr r3, =_vectors_end
+keep_honking:
+    ldr r2, [r1, #0x0]
+    str r2, [r0, #0x0]
+    add r0, r0, #0x4
+    add r1, r1, #0x4
+    cmp r1, r3
+    bne keep_honking
+
+    LDR sp, =stack_top
+    BL c_entry
+
+undef_inst:
+swi:
+abort_prefetch:
+abort_data:
+irq:
+fiq:
+    B .
+
+
+
 _vectors:
     LDR pc, _reset
     LDR pc, _undef_inst
@@ -18,24 +43,4 @@ _abort_data: .word abort_data
 _irq: .word irq
 _fiq: .word fiq
 
-
-
-
-
-
-.section .text
-.global asm_entry
-asm_entry:
-    LDR sp, =stack_top
-    BL c_entry
-
-undef_inst:
-swi:
-abort_prefetch:
-abort_data:
-irq:
-fiq:
-    B .
-
-
-
+_vectors_end:

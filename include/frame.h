@@ -92,6 +92,8 @@ struct trapframe {
 };
 
 
+/* the following macros DO NOT involve any mode changes */
+
 /*
  * PUSHFRAME - macro to push a trap frame on the stack in the current mode
  * Since the current mode is used, the SVC lr field is not defined.

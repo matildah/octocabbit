@@ -18,6 +18,8 @@
 #define _UART_H_
 
 #include <stdint.h>
+void kputs(const char *s);
+
 /* http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0224i/Bbabegge.html */
 #define UART0       ((volatile uint32_t*)0x101f1000)
 /* http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0183g/I18381.html */

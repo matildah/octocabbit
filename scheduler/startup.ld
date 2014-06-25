@@ -1,8 +1,6 @@
-ENTRY(_vectors)
+ENTRY(asm_entry)
 SECTIONS
 {
-    . = 0x0000;
-    .vectors : { startup.o(.vectors) }
     . = 0x10000;
     .startup : { startup.o(.text) }
     .text : { *(.text) }

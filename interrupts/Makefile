@@ -3,9 +3,10 @@ CC=arm-none-eabi-gcc
 LD=arm-none-eabi-ld
 OBJCOPY=arm-none-eabi-objcopy
 CPU=arm926ej-s
-CFLAGS=-g
+CFLAGS=-g -I../include/
 ASFLAGS=-g
-LDFLAGS=-T startup.ld
+LDFLAGS=-T startup.ld -L../lib/
+LIBRARIES=-lkyubey
 
 %.o : %.s
 	$(AS) -mcpu=$(CPU) $(ASFLAGS) $< -o $@
@@ -13,7 +14,7 @@ LDFLAGS=-T startup.ld
 	$(CC) -c -mcpu=$(CPU) $(CFLAGS) $< -o $@
 
 image.elf : startup.o main.o
-	$(LD) $(LDFLAGS) $^ -o $@
+	$(LD) $(LDFLAGS) $^ $(LIBRARIES) -o $@
 
 image.bin : image.elf
 	$(OBJCOPY) -O binary $< $@

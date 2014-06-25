@@ -18,5 +18,10 @@ image.elf : startup.o main.o
 image.bin : image.elf
 	$(OBJCOPY) -O binary $< $@
 
+rundebug: image.elf
+	qemu-system-arm -s -S -M versatilepb -m 128M -nographic -kernel image.elf -serial stdio
+run: image.elf
+	qemu-system-arm -M versatilepb -m 128M -nographic -kernel image.elf -serial stdio
+
 clean :
 	rm -f *.o image.bin image.elf

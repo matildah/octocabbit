@@ -7,6 +7,7 @@ void c_entry()
     while (*foo != 0) {
         *my_uart = *foo;
         foo++;
+        asm("svc 0x0");
     }
 
 }

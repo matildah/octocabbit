@@ -26,7 +26,6 @@
 .section .text
 .global asm_entry
 asm_entry:
-    /*
     mov r0, #0x0
     ldr r1, =_vectors
     ldr r3, =_vectors_end

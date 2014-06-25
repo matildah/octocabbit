@@ -41,37 +41,37 @@ keep_honking:
     bl c_entry
     b .
 
-undef_inst:
+_undef_inst:
     b .
-swi:
+_swi:
     b .
-abort_prefetch:
+_abort_prefetch:
     b .
-abort_data:
+_abort_data:
     b .
-irq:
+_irq:
     b .
-fiq:
+_fiq:
     b .
 
 
 
 _vectors:
-    ldr pc, _reset
-    ldr pc, _undef_inst
-    ldr pc, _swi
-    ldr pc, _abort_prefetch
-    ldr pc, _abort_data
+    ldr pc, _reset_
+    ldr pc, _undef_inst_
+    ldr pc, _swi_
+    ldr pc, _abort_prefetch_
+    ldr pc, _abort_data_
     B .                         /* padding */
-    ldr pc, _irq
-    ldr pc, _fiq
+    ldr pc, _irq_
+    ldr pc, _fiq_
 
-_reset: .word asm_entry
-_undef_inst: .word undef_inst
-_swi: .word swi
-_abort_prefetch: .word abort_prefetch
-_abort_data: .word abort_data
-_irq: .word irq
-_fiq: .word fiq
+_reset_: .word asm_entry
+_undef_inst_: .word _undef_inst
+_swi_: .word _swi
+_abort_prefetch_: .word _abort_prefetch
+_abort_data_: .word _abort_data
+_irq_: .word _irq
+_fiq_: .word _fiq
 
 _vectors_end:

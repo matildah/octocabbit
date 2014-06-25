@@ -10,7 +10,7 @@ _vectors:
     LDR pc, _irq
     LDR pc, _fiq
 
-_reset: .word _asm_entry
+_reset: .word asm_entry
 _undef_inst: .word undef_inst
 _swi: .word swi
 _abort_prefetch: .word abort_prefetch
@@ -23,9 +23,19 @@ _fiq: .word fiq
 
 
 
-.section text
-.global _asm_entry
-_asm_entry:
+.section .text
+.global asm_entry
+asm_entry:
     LDR sp, =stack_top
     BL c_entry
+
+undef_inst:
+swi:
+abort_prefetch:
+abort_data:
+irq:
+fiq:
     B .
+
+
+

@@ -1,4 +1,4 @@
-ENTRY(_Reset)
+ENTRY(_asm_entry)
 SECTIONS
 {
     . = 0x10000;

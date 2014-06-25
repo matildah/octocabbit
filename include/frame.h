@@ -15,6 +15,13 @@
  */
 
 /*
+ * i have taken taken things from OpenBSD's sys/arch/arm/include/frame.h:
+ * PUSHFRAME and PULLFRAME
+ * struct trapframe
+ * The copyright notice and license for that file is below.
+ */
+
+/*
  * Copyright (c) 1994-1997 Mark Brinicombe.
  * Copyright (c) 1994 Brini.
  * All rights reserved.
@@ -83,5 +90,34 @@ struct trapframe {
     register_t svc_lr; /* r14 from supervisor mode */
     register_t pc;
 };
+
+
+/*
+ * PUSHFRAME - macro to push a trap frame on the stack in the current mode
+ * Since the current mode is used, the SVC lr field is not defined.
+ */
+
+#define PUSHFRAME							   \
+	str	lr, [sp, #-4]!;		/* Push the return address */	   \
+	sub	sp, sp, #(4*17);	/* Adjust the stack pointer */	   \
+	stmia	sp, {r0-r14}^;		/* Push the user mode registers */ \
+        mov     r0, r0;                 /* NOP for previous instruction */ \
+	mrs	r0, spsr_all;		/* Put the SPSR on the stack */	   \
+	str	r0, [sp, #-4]!
+
+/*
+ * PULLFRAME - macro to pull a trap frame from the stack in the current mode
+ * Since the current mode is used, the SVC lr field is ignored.
+ */
+
+#define PULLFRAME							   \
+        ldr     r0, [sp], #0x0004;      /* Get the SPSR from stack */	   \
+        msr     spsr_all, r0;						   \
+        ldmia   sp, {r0-r14}^;		/* Restore registers (usr mode) */ \
+        mov     r0, r0;                 /* NOP for previous instruction */ \
+	add	sp, sp, #(4*17);	/* Adjust the stack pointer */	   \
+ 	ldr	lr, [sp], #0x0004	/* Pull the return address */
+
+
 
 #endif /* _FRAME_H_ */

@@ -38,7 +38,7 @@
  *    documentation and/or other materials provided with the distribution.
  * 3. All advertising materials mentioning features or use of this software
  *    must display the following acknowledgement:
- *	This product includes software developed by Brini.
+ * This product includes software developed by Brini.
  * 4. The name of the company nor the name of the author may be used to
  *    endorse or promote products derived from this software without specific
  *    prior written permission.
@@ -97,26 +97,26 @@ struct trapframe {
  * Since the current mode is used, the SVC lr field is not defined.
  */
 
-#define PUSHFRAME							   \
-	str	lr, [sp, #-4]!;		/* Push the return address */	   \
-	sub	sp, sp, #(4*17);	/* Adjust the stack pointer */	   \
-	stmia	sp, {r0-r14}^;		/* Push the user mode registers */ \
-        mov     r0, r0;                 /* NOP for previous instruction */ \
-	mrs	r0, spsr_all;		/* Put the SPSR on the stack */	   \
-	str	r0, [sp, #-4]!
+#define PUSHFRAME                                                            \
+    str    lr, [sp, #-4]!;    /* Push the return address */                  \
+    sub    sp, sp, #(4*17);   /* Adjust the stack pointer */                 \
+    stmia  sp, {r0-r14}^;     /* Push the user mode registers */             \
+    mov    r0, r0;            /* NOP for previous instruction */             \
+    mrs    r0, spsr_all;      /* Put the SPSR on the stack */                \
+    str    r0, [sp, #-4]!
 
 /*
  * PULLFRAME - macro to pull a trap frame from the stack in the current mode
  * Since the current mode is used, the SVC lr field is ignored.
  */
 
-#define PULLFRAME							   \
-        ldr     r0, [sp], #0x0004;      /* Get the SPSR from stack */	   \
-        msr     spsr_all, r0;						   \
-        ldmia   sp, {r0-r14}^;		/* Restore registers (usr mode) */ \
-        mov     r0, r0;                 /* NOP for previous instruction */ \
-	add	sp, sp, #(4*17);	/* Adjust the stack pointer */	   \
- 	ldr	lr, [sp], #0x0004	/* Pull the return address */
+#define PULLFRAME                                                            \
+    ldr    r0, [sp], #0x0004;   /* Get the SPSR from stack */                \
+    msr    spsr_all, r0;                                                     \
+    ldmia  sp, {r0-r14}^;       /* Restore registers (usr mode) */           \
+    mov    r0, r0;              /* NOP for previous instruction */           \
+    add    sp, sp, #(4*17);     /* Adjust the stack pointer */               \
+    ldr    lr, [sp], #0x0004    /* Pull the return address */
 
 
 

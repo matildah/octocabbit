@@ -70,25 +70,25 @@
 #include <ktypes.h>
 
 struct trapframe {
-    register_t spsr;
-    register_t r0;
-    register_t r1;
-    register_t r2;
-    register_t r3;
-    register_t r4;
-    register_t r5;
-    register_t r6;
-    register_t r7;
-    register_t r8;
-    register_t r9;
-    register_t r10;
-    register_t r11;
-    register_t r12;
-    register_t cur_sp; /* r13 from where we were interrupted */
-    register_t cur_lr; /* r14 from where we were interrupted */ 
-    register_t svc_sp; /* r13 from supervisor mode */
-    register_t svc_lr; /* r14 from supervisor mode */
-    register_t pc;
+    register_t spsr;    /* 0  */
+    register_t r0;      /* 1  */
+    register_t r1;      /* 2  */
+    register_t r2;      /* 3  */
+    register_t r3;      /* 4  */
+    register_t r4;      /* 5  */
+    register_t r5;      /* 6  */
+    register_t r6;      /* 7  */
+    register_t r7;      /* 8  */
+    register_t r8;      /* 9  */
+    register_t r9;      /* 10 */
+    register_t r10;     /* 11 */
+    register_t r11;     /* 12 */
+    register_t r12;     /* 13 */
+    register_t cur_sp;  /* 14 */ /* r13 from where we were interrupted */
+    register_t cur_lr;  /* 15 */ /* r14 from where we were interrupted */
+    register_t svc_sp;  /* 16 */ /* r13 from supervisor mode */
+    register_t svc_lr;  /* 17 */ /* r14 from supervisor mode */
+    register_t pc;      /* 18 */
 };
 
 

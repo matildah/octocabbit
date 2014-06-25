@@ -39,12 +39,18 @@ keep_honking:
 
     ldr sp, =stack_top
     bl c_entry
+    b .
 
 undef_inst:
+    b .
 swi:
+    b .
 abort_prefetch:
+    b .
 abort_data:
+    b .
 irq:
+    b .
 fiq:
     b .
 

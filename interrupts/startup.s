@@ -56,9 +56,9 @@ _fiq:
 
 
 _swi:
+    stmfd sp!, {lr}
     ldr r0, _callable
-//    msr CPSR_c, #0xd0
-    bx lr
+    ldmfd sp!, {pc}^
     _callable: .word 0xca11ab1e
 
 _vectors:

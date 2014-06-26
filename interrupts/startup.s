@@ -38,6 +38,7 @@ keep_honking:
     bne keep_honking    /* I'M RELOADING */
 
     ldr sp, =stack_top
+    msr CPSR_c, #0xd0
     bl c_entry
     b .
 

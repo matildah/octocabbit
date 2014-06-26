@@ -26,16 +26,20 @@
 .section .text
 .global asm_entry
 asm_entry:
+    /* copy the table of exception vectors to 0x0 because qemu is a bastard and
+    refuses to load it for us */
     mov r0, #0x0
     ldr r1, =_vectors
     ldr r3, =_vectors_end
-keep_honking:
+vector_copy_loop:
     ldr r2, [r1, #0x0]
     str r2, [r0, #0x0]
     add r0, r0, #0x4
     add r1, r1, #0x4
     cmp r1, r3
-    bne keep_honking    /* I'M RELOADING */
+    bne vector_copy_loop    /* I'M RELOADING */
+
+    /* set up supervisor mode stack and user mode stack */
 
     ldr sp, =svc_stack
     msr CPSR_c, #0xd0

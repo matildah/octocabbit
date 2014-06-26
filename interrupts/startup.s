@@ -45,8 +45,6 @@ keep_honking:
 
 _undef_inst:
     b .
-_swi:
-    b .
 _abort_prefetch:
     b .
 _abort_data:
@@ -57,6 +55,11 @@ _fiq:
     b .
 
 
+_swi:
+    ldr r0, _callable
+//    msr CPSR_c, #0xd0
+    bx lr
+    _callable: .word 0xca11ab1e
 
 _vectors:
     ldr pc, _reset_
@@ -68,12 +71,12 @@ _vectors:
     ldr pc, _irq_
     ldr pc, _fiq_
 
-_reset_: .word asm_entry
-_undef_inst_: .word _undef_inst
-_swi_: .word _swi
-_abort_prefetch_: .word _abort_prefetch
-_abort_data_: .word _abort_data
-_irq_: .word _irq
-_fiq_: .word _fiq
+    _reset_: .word asm_entry
+    _undef_inst_: .word _undef_inst
+    _swi_: .word _swi
+    _abort_prefetch_: .word _abort_prefetch
+    _abort_data_: .word _abort_data
+    _irq_: .word _irq
+    _fiq_: .word _fiq
 
 _vectors_end:

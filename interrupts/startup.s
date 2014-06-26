@@ -60,8 +60,12 @@ _fiq:
 
 
 _swi:
+    /* the stack might not be 8-byte aligned when 
     stmfd sp!, {lr}
     stmfd sp!, {r0-r12}
+    and R1, sp, #4
+    sub sp, sp, r1
+    stmfd sp!, 
     ldr r0, _callable
     ldr r1, _callable
     ldr r2, _callable

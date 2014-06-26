@@ -37,8 +37,9 @@ keep_honking:
     cmp r1, r3
     bne keep_honking    /* I'M RELOADING */
 
-    ldr sp, =stack_top
+    ldr sp, =svc_stack
     msr CPSR_c, #0xd0
+    ldr sp, =usr_stack
     bl c_entry
     b .
 

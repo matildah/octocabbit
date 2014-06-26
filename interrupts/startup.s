@@ -57,7 +57,22 @@ _fiq:
 
 _swi:
     stmfd sp!, {lr}
+    stmfd sp!, {r0-r12}
     ldr r0, _callable
+    ldr r1, _callable
+    ldr r2, _callable
+    ldr r3, _callable
+    ldr r4, _callable
+    ldr r5, _callable
+    ldr r6, _callable
+    ldr r7, _callable
+    ldr r8, _callable
+    ldr r9, _callable
+    ldr r10, _callable
+    ldr r11, _callable
+    ldr r12, _callable
+    ldr r14, _callable
+    ldmfd sp!, {r0-r12}
     ldmfd sp!, {pc}^
     _callable: .word 0xca11ab1e
 

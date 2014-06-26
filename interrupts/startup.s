@@ -60,12 +60,6 @@ _fiq:
 
 
 _swi:
-    /* we need to preserve 8-byte stack alignment so we need to push an even
-    number of registers onto the stack. We push 14 registers, lr, and r0-r12
-    so we preserve alignment. The only registers we don't push are sp (r13) and
-    pc (r15).
-    */
-
     stmfd sp!, {lr}
     stmfd sp!, {r0-r12}
     ldr r0, _callable

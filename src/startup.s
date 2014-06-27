@@ -85,7 +85,6 @@ _swi:
     stmfd sp!, {r0-r12}
     and r1, sp, #4
     sub sp, sp, r1
-    stmfd sp!, 
     ldr r0, _callable
     ldr r1, _callable
     ldr r2, _callable

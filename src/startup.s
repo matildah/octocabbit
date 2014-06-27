@@ -60,10 +60,30 @@ _fiq:
 
 
 _swi:
-    /* the stack might not be 8-byte aligned when 
+    /* If this code (which is reachable from executing the swi/svc instructions
+    or calling _swi) is never reached from supervisor mode code (note that
+    _swi and everything it calls is itself supervisor mode code) we can:
+
+    1. Assume 8-byte stack alignment upon entry to _swi (the EABI / AAPCS 
+    requires we must have 8-byte stack alignment when we call C/Rust code)
+
+    2. Not have to worry about reentrancy in _swi. If we execute swi/svc in code
+    that _swi runs, we would clobber lr_svc and spsr_svc (which would prevent
+    the original invocation of _swi from returning to the right place)
+
+    while we can force the "only execute swi/svc or call _swi" from user mode
+    constraint, we might as well make _swi reentrant (this involves forcing 8
+    byte stack alignment before calling C/Rust code and pushing lr_svc and
+    spsr_svc onto the stack before doing anything which might execute swi/svc.
+
+    references
+    http://infocenter.arm.com/help/topic/com.arm.doc.dui0056d/Cegbbfgj.html
+    http://infocenter.arm.com/help/topic/com.arm.doc.dui0471c/Bgbeacfi.html
+    */
+
     stmfd sp!, {lr}
     stmfd sp!, {r0-r12}
-    and R1, sp, #4
+    and r1, sp, #4
     sub sp, sp, r1
     stmfd sp!, 
     ldr r0, _callable

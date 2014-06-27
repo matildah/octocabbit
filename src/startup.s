@@ -68,13 +68,30 @@ _swi:
     requires we must have 8-byte stack alignment when we call C/Rust code)
 
     2. Not have to worry about reentrancy in _swi. If we execute swi/svc in code
-    that _swi runs, we would clobber lr_svc and spsr_svc (which would prevent
+    that _swi runs, we would clobber LR_svc and SPSR_svc (which would prevent
     the original invocation of _swi from returning to the right place)
 
     while we can force the "only execute swi/svc or call _swi" from user mode
     constraint, we might as well make _swi reentrant (this involves forcing 8
-    byte stack alignment before calling C/Rust code and pushing lr_svc and
-    spsr_svc onto the stack before doing anything which might execute swi/svc.
+    byte stack alignment before calling C/Rust code and pushing LR_svc and
+    SPSR_svc onto the stack before doing anything which might execute swi/svc.
+
+    registers:
+
+    r0-r12 have no special meaning and we must preserve them
+
+    r13 is the stack pointer, is banked by mode, and gets set when we enter
+        supervisor mode
+
+    r14 is the link register, is banked by mode, and gets set each time we
+        execute swi/svc
+
+    r15 is the program counter
+
+    SPSR_svc is the saved program status register, is banked by mode, and gets
+        set each time we execute swi/svc
+
+    CPSR is the current program status register
 
     references
     http://infocenter.arm.com/help/topic/com.arm.doc.dui0056d/Cegbbfgj.html

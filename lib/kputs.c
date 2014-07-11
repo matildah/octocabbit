@@ -15,7 +15,7 @@
  */
 
 #include <uart.h>
-void kputc(char s) {
+void kputc(char c) {
     *UART0 = c;
 }
 

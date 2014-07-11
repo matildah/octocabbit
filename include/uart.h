@@ -18,6 +18,7 @@
 #define _UART_H_
 
 #include <stdint.h>
+#include <stddef.h>
 void kputs(const char *s);
 void kputc(char s);
 int kprintf(const char *fmt, ...);

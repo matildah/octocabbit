@@ -22,7 +22,8 @@ void kputs(const char *s);
 void kputc(char s);
 int kprintf(const char *fmt, ...);
 void itoa32(uint32_t num, char *output);
-
+void khexdump(uint8_t *buf, size_t len);
+void itoa8(uint8_t num, char *output);
 
 /* http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0224i/Bbabegge.html */
 #define UART0       ((volatile uint32_t*)0x101f1000)

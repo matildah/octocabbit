@@ -13,7 +13,7 @@
  * NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE
  * USE OR PERFORMANCE OF THIS SOFTWARE.
  */
-
+.global _swi
 _swi:
     /* If this code (which is reachable from executing the swi/svc instructions
     or calling _swi) is never reached from supervisor mode code (note that

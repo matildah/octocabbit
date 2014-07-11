@@ -15,6 +15,7 @@
  */
 
 #include <stdarg.h>
+#include <stdint.h>
 
 int
 kprintf(const char *fmt, ...) {
@@ -25,4 +26,20 @@ kprintf(const char *fmt, ...) {
 }
 
 
+void
+itoa32(uint32_t num, char *output) {
+    int digit, i;
+
+    for (i = 0; i < 8; i++) {
+        digit = num & 0xF;
+        if (digit < 0xA) {
+            output[7 - i] = '0' + digit;
+        } else {
+            output[7 - i] = 'A' + digit - 0xA;
+        }
+
+        num = num >> 4;
+    }
+    output[8] = '\0';
+}
 

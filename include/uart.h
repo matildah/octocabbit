@@ -19,6 +19,8 @@
 
 #include <stdint.h>
 void kputs(const char *s);
+void itoa32(uint32_t num, char *output);
+
 
 /* http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0224i/Bbabegge.html */
 #define UART0       ((volatile uint32_t*)0x101f1000)

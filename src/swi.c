@@ -18,6 +18,6 @@
 
 void
 swi(uint32_t *foo) {
-    kprintf("%p\n", foo);
+    khexdump(foo, 120);
 }
 

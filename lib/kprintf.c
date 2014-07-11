@@ -22,7 +22,7 @@ int
 kprintf(const char *fmt, ...) {
     va_list argl;
     char buf[256];
-    const char *p;
+    const char *p, *s;
     int numwritten = 0;
     uint32_t i;
     va_start(argl, fmt);
@@ -39,6 +39,10 @@ kprintf(const char *fmt, ...) {
                 return numwritten;
             case '%':
                 kputc('%');
+                break;
+            case 's':
+                s = va_arg(argl, char *);
+                kputs(s);
                 break;
             case 'p':
                 i = va_arg(argl, uint32_t);

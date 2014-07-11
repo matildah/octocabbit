@@ -15,6 +15,10 @@
  */
 
 #include <uart.h>
+void kputc(char s) {
+    *UART0 = c;
+}
+
 void kputs(const char *s) {
     while (*s != 0) {
         *UART0 = *s;

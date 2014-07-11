@@ -35,7 +35,7 @@ itoa32(uint32_t num, char *output) {
         if (digit < 0xA) {
             output[7 - i] = '0' + digit;
         } else {
-            output[7 - i] = 'A' + digit - 0xA;
+            output[7 - i] = 'a' + digit - 0xA;
         }
 
         num = num >> 4;

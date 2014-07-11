@@ -58,20 +58,11 @@ _swi:
     stmfd sp!, {r0-r12}
     and r1, sp, #4
     sub sp, sp, r1
-    ldr r0, _callable
-    ldr r1, _callable
-    ldr r2, _callable
-    ldr r3, _callable
-    ldr r4, _callable
-    ldr r5, _callable
-    ldr r6, _callable
-    ldr r7, _callable
-    ldr r8, _callable
-    ldr r9, _callable
-    ldr r10, _callable
-    ldr r11, _callable
-    ldr r12, _callable
-    ldr r14, _callable
+    stmfd sp!, {r1, lr}
+    mov r0, sp
+    bl swi
+    ldmfd sp!, {r1, lr}
+    add sp, sp, r1
     ldmfd sp!, {r0-r12}
     ldmfd sp!, {pc}^
     _callable: .word 0xca11ab1e

@@ -2,24 +2,24 @@
  * this is the entry point
  *
  * asm_entry is loaded at 0x10000 and is the first bit of our code that gets
- * executed. We copy the exception vectors to the exception vector base 
+ * executed. We copy the exception vectors to the exception vector base
  * location and set up stack pointers for all the modes we will use.
  * We then call the c entry point, c_entry.
  */
 
 /*
  * Copyright (c) 2014 Matilda <sadieperkins@riseup.net>
- * 
- * Permission to use, copy, modify, and/or distribute this software for any 
- * purpose with or without fee is hereby granted, provided that the above 
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES 
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF 
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY 
- * SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER 
- * RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, 
- * NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE 
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+ * SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER
+ * RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
+ * NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE
  * USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
@@ -64,7 +64,7 @@ _swi:
     or calling _swi) is never reached from supervisor mode code (note that
     _swi and everything it calls is itself supervisor mode code) we can:
 
-    1. Assume 8-byte stack alignment upon entry to _swi (the EABI / AAPCS 
+    1. Assume 8-byte stack alignment upon entry to _swi (the EABI / AAPCS
     requires we must have 8-byte stack alignment when we call C/Rust code)
 
     2. Not have to worry about reentrancy in _swi. If we execute swi/svc in code
@@ -78,7 +78,8 @@ _swi:
 
     registers:
 
-    r0-r12 have no special meaning and we must preserve them
+    r0-r12 have no special meaning (well, they might contain the arguments
+    to the syscall or the syscall number) and we must preserve them
 
     r13 is the stack pointer, is banked by mode, and gets set when we enter
         supervisor mode

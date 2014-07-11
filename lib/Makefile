@@ -11,7 +11,7 @@ ARFLAGS=
 
 all : libkyubey.a
 
-libkyubey.a : kputs.o
+libkyubey.a : kputs.o kprintf.o
 	$(AR) rv $@ $^
 %.o : %.s
 	$(AS) -mcpu=$(CPU) $(ASFLAGS) $< -o $@

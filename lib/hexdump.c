@@ -24,10 +24,19 @@ khexdump(uint8_t *buf, size_t len) {
     char obuf[3];
 
     for (i = 0; i < len; i++) {
+        if (i % 16 == 0) {
+            kprintf("%p: ", buf + i);
+        }
         itoa8(buf[i], obuf);
         kputs(obuf);
-        kputs("\n");
+        if (i % 2 == 1) {
+            kputs(" ");
+        }
+        if (i % 16 == 15) {
+            kputs("\n");
+        }
     }
+    kputs("\n");
 }
 
 

@@ -20,6 +20,7 @@
 #include <stdint.h>
 void kputs(const char *s);
 void kputc(char s);
+kprintf(const char *fmt, ...);
 void itoa32(uint32_t num, char *output);
 
 

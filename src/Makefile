@@ -13,7 +13,7 @@ LIBRARIES=-lkyubey
 %.o : %.c
 	$(CC) -c -mcpu=$(CPU) $(CFLAGS) $< -o $@
 
-image.elf : startup.o main.o
+image.elf : startup.o vectors.o main.o
 	$(LD) $(LDFLAGS) $^ $(LIBRARIES) -o $@
 
 image.bin : image.elf

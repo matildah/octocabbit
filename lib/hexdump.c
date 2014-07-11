@@ -26,6 +26,7 @@ khexdump(uint8_t *buf, size_t len) {
     for (i = 0; i < len; i++) {
         itoa8(buf[i], obuf);
         kputs(obuf);
+        kputs("\n");
     }
 }
 
@@ -34,7 +35,7 @@ void
 itoa8(uint8_t num, char *output) {
     int digit;
 
-    digit = num & 0xF0;
+    digit = (num & 0xF0) >> 4;
     if (digit < 0xA) {
         output[0] = '0' + digit;
     } else {

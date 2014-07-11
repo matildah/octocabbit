@@ -43,6 +43,7 @@ kprintf(const char *fmt, ...) {
             case 'p':
                 i = va_arg(argl, uint32_t);
                 itoa32(i, buf);
+                kputs("0x");
                 kputs(buf);
                 break;
         }

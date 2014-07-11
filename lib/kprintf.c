@@ -16,13 +16,39 @@
 
 #include <stdarg.h>
 #include <stdint.h>
+#include <uart.h>
 
 int
 kprintf(const char *fmt, ...) {
     va_list argl;
     char buf[256];
+    const char *p;
+    int numwritten = 0;
+    uint32_t i;
+    va_start(argl, fmt);
 
-    int numwritten;
+    for (p = fmt; *p != '\0'; p++) {
+        if (*p != '%') {
+            kputc(*p);
+            numwritten++;
+            continue;
+        }
+
+        switch (*++p) {
+            case '\0':
+                return numwritten;
+            case '%':
+                kputc('%');
+                break;
+            case 'p':
+                i = va_arg(argl, uint32_t);
+                itoa32(i, buf);
+                kputs(buf);
+                break;
+        }
+    }
+    va_end(argl);
+    return numwritten;
 }
 
 

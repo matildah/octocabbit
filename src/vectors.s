@@ -54,16 +54,30 @@ _swi:
     http://infocenter.arm.com/help/topic/com.arm.doc.dui0471c/Bgbeacfi.html
     */
 
-    stmfd sp!, {lr}
-    stmfd sp!, {r0-r12}
-    and r1, sp, #4
-    sub sp, sp, r1
-    stmfd sp!, {r1, lr}
-    mov r0, sp
-    bl swi
-    ldmfd sp!, {r1, lr}
-    add sp, sp, r1
-    ldmfd sp!, {r0-r12}
-    ldmfd sp!, {pc}^
+    stmfd sp!, {lr}         /* save lr (the pc of the interrupted code) */
+    stmfd sp!, {r0-r12}     /* saves r0-r12 of interrupted code */
+    stmfd sp!, {sp, lr}^    /* saves the sp and lr of interrupted code */
+
+    mrs r0, SPSR            /* save SPSR into r0 */
+    stmfd sp!, {r0}         /* and push it */
+
+    and r0, sp, #4          /* test stack alignment */
+    sub sp, sp, r0          /* and adjust the stack to be 8 byte aligned */
+    stmfd sp!, {r0, lr}     /* store alignment and lr (we store lr too just to
+                               keep the stack aligned) */
+
+    mov r0, sp              /* only argument to the C trap handler is a pointer
+                               to the trap frame */
+    bl swi                  /* call it */
+
+    ldmfd sp!, {r0, lr}     /* pop stack alignment (and saved lr) */
+    add sp, sp, r0          /* restore previous stack position */
+
+    ldmfd sp!, {r0}         /* pop SPSR */
+    msr SPSR, r0            /* shove it into SPSR */
+
+    ldmfd sp!, {sp, lr}^    /* restore sp and lr of interrupted code */
+    ldmfd sp!, {r0-r12}     /* restore r0-r12 of interrupted code */
+    ldmfd sp!, {pc}^        /* return */
     _callable: .word 0xca11ab1e
 

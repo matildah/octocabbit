@@ -1,4 +1,4 @@
-I do things with ARM in supervisor mode. Maybe a kernel will happen.
+octocabbit -- a kernel for ARM written by Matilda <sadieperkins@riseup.net>
 
 to make the kernel, run "make" in lib/ and then run "make" in src/
 

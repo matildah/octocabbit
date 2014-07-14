@@ -39,16 +39,17 @@ kprintf(const char *fmt, ...) {
                 return numwritten;
             case '%':
                 kputc('%');
+                numwritten++;
                 break;
             case 's':
                 s = va_arg(argl, char *);
-                kputs(s);
+                numwritten += kputs(s);
                 break;
             case 'p':
                 i = va_arg(argl, uint32_t);
                 itoa32(i, buf);
-                kputs("0x");
-                kputs(buf);
+                numwritten += kputs("0x");
+                numwritten += kputs(buf);
                 break;
         }
     }

@@ -27,10 +27,13 @@ forkswtch(struct trapframe *tf) { /* first time this is called, this acts like f
                                      and the following time, it just switches */
     if (forked == 0) {
         forked = 1;
+        /* parent */
         pcb[0] = *tf;
-        pcb[0].r0 = 0;
+        pcb[0].r0 = 1;
+        *tf = pcb[0];
+        /* child */
         pcb[1] = *tf;
-        pcb[1].r0 = 1;
+        pcb[1].r0 = 0;
         curtask = 0;
         return;
     }
@@ -46,9 +49,4 @@ forkswtch(struct trapframe *tf) { /* first time this is called, this acts like f
     *tf = pcb[curtask];
     return;
 }
-
-
-
-
-
 

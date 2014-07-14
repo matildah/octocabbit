@@ -19,6 +19,6 @@
 
 void
 swi(struct trapframe *foo) {
-    dumpregs(foo);
+    forkswtch(foo);
 }
 

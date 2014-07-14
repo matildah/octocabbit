@@ -61,18 +61,16 @@ _swi:
     mrs r0, SPSR            /* save SPSR into r0 */
     stmfd sp!, {r0}         /* and push it */
 
-    mov r1, sp              /* the trap frame is done, so save a pointer to it */
+    mov r0, sp              /* the trap frame is done, so save a pointer to it */
 
-    and r0, sp, #4          /* test stack alignment */
-    sub sp, sp, r0          /* and adjust the stack to be 8 byte aligned */
-    stmfd sp!, {r0, lr}     /* store alignment and lr (we store lr too just to
+    and r1, sp, #4          /* test stack alignment */
+    sub sp, sp, r1          /* and adjust the stack to be 8 byte aligned */
+    stmfd sp!, {r1, lr}     /* store alignment and lr (we store lr too just to
                                keep the stack aligned) */
 
-    mov r0, r1              /* only argument to the C trap handler is a pointer
-                               to the trap frame */
     bl swi                  /* call it */
 
-    ldmfd sp!, {r0, lr}     /* pop stack alignment (and saved lr) */
+    ldmfd sp!, {r0, lr}     /* pop stack alignment (and the padding, composed of lr) */
     add sp, sp, r0          /* restore previous stack position */
 
     ldmfd sp!, {r0}         /* pop SPSR */

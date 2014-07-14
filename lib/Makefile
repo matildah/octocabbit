@@ -19,4 +19,4 @@ libkyubey.a : kputs.o kprintf.o khexdump.o memcpy.o
 	$(CC) -c -mcpu=$(CPU) $(CFLAGS) $< -o $@
 
 clean :
-	rm -f *.o image.bin image.elf
+	rm -f *.o libkyubey.a

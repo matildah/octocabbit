@@ -21,7 +21,7 @@
 #include <stddef.h>
 void kputs(const char *s);
 void kputc(char s);
-int kprintf(const char *fmt, ...);
+int kprintf(const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
 void itoa32(uint32_t num, char *output);
 void khexdump(uint8_t *buf, size_t len);
 void itoa8(uint8_t num, char *output);

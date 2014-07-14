@@ -39,6 +39,6 @@ struct trapframe {
     register_t pc;
 };
 
-
+void dumpregs(struct trapframe *foo);
 
 #endif /* _FRAME_H_ */

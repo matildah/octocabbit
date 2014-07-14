@@ -20,6 +20,9 @@
 #include <ktypes.h>
 
 struct trapframe {
+    register_t spsr;
+    register_t sp;
+    register_t lr;
     register_t r0;
     register_t r1;
     register_t r2;
@@ -33,10 +36,6 @@ struct trapframe {
     register_t r10;
     register_t r11;
     register_t r12;
-    register_t cur_sp;
-    register_t cur_lr;
-    register_t svc_sp;
-    register_t svc_lr;
     register_t pc;
 };
 

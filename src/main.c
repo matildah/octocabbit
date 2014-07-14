@@ -2,13 +2,23 @@
 #include <uart.h>
 void c_entry() 
 {
-    uint32_t foo;
-    foo = 0xb100d1ed;
-    asm("mov r5, r3");
-    asm("mov r6, r3");
-    asm("mov r7, r3");
-    asm("svc 0x0");
-    kprintf("foo %p bar\n", foo);
+    uint32_t forkres = 0xfeedface;
+    kprintf("entered c_entry\n");
+    asm volatile("svc 0x0\n\t mov %0, r0" : "=r" (forkres));
+    if (forkres == 1) { /* parent */
+        while (1) {
+            asm volatile("svc 0x0");
+            kprintf("PARENT!\n");
+        }
+    } else {
+        while (1) {
+            asm volatile("svc 0x0");
+            kprintf("CHILD!\n");
+        }
+    }
+
+
+
 }
 
 

@@ -14,11 +14,29 @@
  * USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include <uart.h>
 #include <frame.h>
+#include <uart.h>
 
 void
-swi(struct trapframe *foo) {
-    dumpregs(foo);
+dumpregs(struct trapframe *foo) {
+    kprintf("BEGINNING OF REGISTER DUMP\n");
+    kprintf("SPSR: %p\n", foo->spsr);
+    kprintf("SP: %p\n", foo->sp);
+    kprintf("LR: %p\n", foo->lr);
+    kprintf("R0: %p\n", foo->r0);
+    kprintf("R1: %p\n", foo->r1);
+    kprintf("R2: %p\n", foo->r2);
+    kprintf("R3: %p\n", foo->r3);
+    kprintf("R4: %p\n", foo->r4);
+    kprintf("R5: %p\n", foo->r5);
+    kprintf("R6: %p\n", foo->r6);
+    kprintf("R7: %p\n", foo->r7);
+    kprintf("R8: %p\n", foo->r8);
+    kprintf("R9: %p\n", foo->r9);
+    kprintf("R10: %p\n", foo->r10);
+    kprintf("R11: %p\n", foo->r11);
+    kprintf("R12: %p\n", foo->r12);
+    kprintf("PC: %p\n", foo->pc);
+    kprintf("END OF REGISTER DUMP\n");
 }
 

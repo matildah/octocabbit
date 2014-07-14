@@ -19,7 +19,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
-void kputs(const char *s);
+size_t kputs(const char *s);
 void kputc(char s);
 int kprintf(const char *fmt, ...) __attribute__ ((format (printf, 1, 2)));
 void itoa32(uint32_t num, char *output);

@@ -15,14 +15,19 @@
  */
 
 #include <uart.h>
-void kputc(char c) {
+void
+kputc(char c) {
     *UART0 = c;
 }
 
-void kputs(const char *s) {
+size_t
+kputs(const char *s) {
+    size_t len = 0;
     while (*s != 0) {
         *UART0 = *s;
         s++;
+        len++;
     }
+    return len;
 }
 

@@ -1,0 +1,6 @@
+virtual memory
+kernel dynamic memory allocation
+interrupts (especially timer interrupts)
+preemptive multitasking
+syscalls
+IPC

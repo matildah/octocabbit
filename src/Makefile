@@ -5,7 +5,7 @@ OBJCOPY=arm-none-eabi-objcopy
 CPU=arm926ej-s
 CFLAGS=-g -I../include/ -Wall
 ASFLAGS=-g
-LDFLAGS=-T startup.ld -L../lib/
+LDFLAGS=-T kernel.ld -L../lib/
 LIBRARIES=-lkyubey
 
 %.o : %.s

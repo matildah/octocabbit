@@ -18,6 +18,6 @@
 *.elf
 *.bin
 
-
+uImage
 
 .*.swp

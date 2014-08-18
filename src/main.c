@@ -2,6 +2,8 @@
 #include <uart.h>
 void c_entry() 
 {
+    kprintf("Hello, world!\n");
+    return;
     uint32_t forkres = 0xfeedface;
     kprintf("entered c_entry\n");
     asm volatile("svc 0x0\n\t mov %0, r0" : "=r" (forkres)); /* this acts like fork */

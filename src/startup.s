@@ -26,6 +26,7 @@
 .section .text
 .global asm_entry
 asm_entry:
+    b stackshit
     /* copy the table of exception vectors to 0x0 because qemu is a bastard and
     refuses to load it for us */
     mov r0, #0x0
@@ -40,7 +41,7 @@ vector_copy_loop:
     bne vector_copy_loop    /* I'M RELOADING */
 
     /* set up supervisor mode stack and user mode stack */
-
+stackshit:
     ldr sp, =svc_stack
     msr CPSR_c, #0xd0
     ldr sp, =usr_stack

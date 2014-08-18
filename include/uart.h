@@ -27,7 +27,7 @@ void khexdump(uint8_t *buf, size_t len);
 void itoa8(uint8_t num, char *output);
 
 /* http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0224i/Bbabegge.html */
-#define UART0       ((volatile uint32_t*)0x101f1000)
+#define UART0       ((volatile uint32_t*)0x44E09000)
 /* http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0183g/I18381.html */
 #define UARTFR        0x06 /* 0x18 bytes */
 #define UARTIMSC      0x0E /* 0x38 bytes */

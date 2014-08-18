@@ -13,16 +13,21 @@ LIBRARIES=-lkyubey
 %.o : %.c
 	$(CC) -c -mcpu=$(CPU) $(CFLAGS) $< -o $@
 
-image.elf : startup.o swi.o vectors.o dumpregs.o switch.o main.o
-	$(LD) $(LDFLAGS) $^ $(LIBRARIES) -o $@
+copy: uImage
+	mount /mnt
+	cp uImage /mnt
+	sync
+	umount /mnt
+
+uImage: image.bin
+	mkimage -A arm -T kernel -C none -a 80300000 -e 80300000 -n octocabbit -d image.bin uImage
 
 image.bin : image.elf
 	$(OBJCOPY) -O binary $< $@
 
-rundebug: image.elf
-	QEMU_AUDIO_DRV=none qemu-system-arm -s -S -M versatilepb -m 128M -nographic -kernel image.elf -serial stdio
-run: image.elf
-	QEMU_AUDIO_DRV=none qemu-system-arm -M versatilepb -m 128M -nographic -kernel image.elf -serial stdio
+image.elf : startup.o swi.o vectors.o dumpregs.o switch.o main.o
+	$(LD) $(LDFLAGS) $^ $(LIBRARIES) -o $@
 
-clean :
-	rm -f *.o image.bin image.elf
+
+clean:
+	rm -f *.o image.bin image.elf uImage

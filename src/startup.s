@@ -43,9 +43,9 @@ vector_copy_loop:
     /* set up supervisor mode stack and user mode stack */
 stackshit:
     ldr sp, =svc_stack
+    bl c_entry
     msr CPSR_c, #0xd0
     ldr sp, =usr_stack
-    bl c_entry
     b .
 
 _undef_inst:

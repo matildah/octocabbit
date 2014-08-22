@@ -13,21 +13,25 @@ LIBRARIES=-lkyubey
 %.o : %.c
 	$(CC) -c -mcpu=$(CPU) $(CFLAGS) $< -o $@
 
+tftp: uImage
+	cp uImage /srv/tftp/
+	chmod 644 /srv/tftp/uImage
+	sudo ifconfig enp2s0 10.0.0.1
+
+uImage: image.bin
+	mkimage -A arm -T kernel -C none -a 80300000 -e 80300000 -n octocabbit -d image.bin uImage
+
 copy: uImage
 	mount /mnt
 	cp uImage /mnt
 	sync
 	umount /mnt
 
-uImage: image.bin
-	mkimage -A arm -T kernel -C none -a 80300000 -e 80300000 -n octocabbit -d image.bin uImage
-
 image.bin : image.elf
 	$(OBJCOPY) -O binary $< $@
 
 image.elf : startup.o swi.o vectors.o dumpregs.o switch.o main.o
 	$(LD) $(LDFLAGS) $^ $(LIBRARIES) -o $@
-
 
 clean:
 	rm -f *.o image.bin image.elf uImage

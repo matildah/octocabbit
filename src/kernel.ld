@@ -2,7 +2,7 @@ ENTRY(asm_entry)
 SECTIONS
 {
     . = 0x80300000;
-    .startup : { startup.o(.text) }
+    .startup : { obj/startup.o(.text) }
     .text : { *(.text) }
     .data : { *(.data) }
     .bss : { *(.bss COMMON) }

@@ -1,16 +1,22 @@
+OBJDIR=obj
 AS=arm-none-eabi-as
 CC=arm-none-eabi-gcc
 LD=arm-none-eabi-ld
 OBJCOPY=arm-none-eabi-objcopy
 CPU=cortex-a8
-CFLAGS=-g -I../include/ -Wall
+CFLAGS=-g -Iinclude/ -Wall
 ASFLAGS=-g
-LDFLAGS=-T kernel.ld -L../lib/
+LDFLAGS=-T src/kernel.ld -L$(OBJDIR)/
 LIBRARIES=-lkyubey
 
-%.o : %.s
+$(OBJDIR)/%.o : src/%.s
 	$(AS) -mcpu=$(CPU) $(ASFLAGS) $< -o $@
-%.o : %.c
+$(OBJDIR)/%.o : src/%.c
+	$(CC) -c -mcpu=$(CPU) $(CFLAGS) $< -o $@
+
+$(OBJDIR)/%.o : lib/%.s
+	$(AS) -mcpu=$(CPU) $(ASFLAGS) $< -o $@
+$(OBJDIR)/%.o : lib/%.c
 	$(CC) -c -mcpu=$(CPU) $(CFLAGS) $< -o $@
 
 tftp: uImage
@@ -30,8 +36,11 @@ copy: uImage
 image.bin : image.elf
 	$(OBJCOPY) -O binary $< $@
 
-image.elf : startup.o swi.o vectors.o dumpregs.o switch.o main.o
+image.elf : $(OBJDIR)/libkyubey.a $(addprefix $(OBJDIR)/, startup.o swi.o vectors.o dumpregs.o switch.o main.o)
 	$(LD) $(LDFLAGS) $^ $(LIBRARIES) -o $@
 
+$(OBJDIR)/libkyubey.a : $(addprefix $(OBJDIR)/, kputs.o kprintf.o khexdump.o memcpy.o)
+	$(AR) rv $@ $^
+
 clean:
-	rm -f *.o image.bin image.elf uImage
+	rm -f image.bin image.elf uImage obj/*

@@ -1,13 +1,16 @@
 OBJDIR=obj
+#CC=arm-none-eabi-gcc
 AS=arm-none-eabi-as
-CC=arm-none-eabi-gcc
-LD=arm-none-eabi-ld
+CC=clang -c -target arm-none-eabi -integrated-as -ffreestanding -nostdlib -fno-builtin
+#AS=$(CC)
+LD=clang -v -target arm-none-eabi -integrated-as -arch arm -ffreestanding -nostdlib -fno-builtin
+#LD=arm-none-eabi-ld
 OBJCOPY=arm-none-eabi-objcopy
 CPU=cortex-a8
 CFLAGS=-g -Iinclude/ -Wall
 ASFLAGS=-g
 LDFLAGS=-T src/kernel.ld -L$(OBJDIR)/
-LIBRARIES=-lkyubey
+LIBRARIES=
 
 $(OBJDIR)/%.o : src/%.s
 	$(AS) -mcpu=$(CPU) $(ASFLAGS) $< -o $@
@@ -36,7 +39,7 @@ copy: uImage
 image.bin : image.elf
 	$(OBJCOPY) -O binary $< $@
 
-image.elf : $(OBJDIR)/libkyubey.a $(addprefix $(OBJDIR)/, startup.o swi.o vectors.o dumpregs.o switch.o main.o)
+image.elf :  $(addprefix $(OBJDIR)/, startup.o swi.o vectors.o dumpregs.o switch.o main.o)  $(OBJDIR)/libkyubey.a
 	$(LD) $(LDFLAGS) $^ $(LIBRARIES) -o $@
 
 $(OBJDIR)/libkyubey.a : $(addprefix $(OBJDIR)/, kputs.o kprintf.o khexdump.o memcpy.o)

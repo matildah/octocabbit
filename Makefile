@@ -2,7 +2,7 @@ OBJDIR=obj
 
 AS=arm-none-eabi-as
 CC=clang -c -target arm-none-eabi -integrated-as -ffreestanding -nostdlib -fno-builtin
-LD=clang -v -target arm-none-eabi -integrated-as -arch arm -ffreestanding -nostdlib -fno-builtin
+LD=clang -target arm-none-eabi -integrated-as -arch arm -ffreestanding -nostdlib -fno-builtin
 OBJCOPY=arm-none-eabi-objcopy
 
 CPU=cortex-a8
@@ -11,7 +11,7 @@ ASFLAGS=-g
 LDFLAGS=-T src/kernel.ld -L$(OBJDIR)/
 
 LIBRARIES=
-KOBJ=$(addprefix $(OBJDIR)/, startup.o swi.o vectors.o dumpregs.o switch.o main.o)  $(OBJDIR)/libkyubey.a
+KOBJ=$(addprefix $(OBJDIR)/, startup.o swi.o vectors.o dumpregs.o switch.o main.o) $(OBJDIR)/libkyubey.a
 LOBJ=$(addprefix $(OBJDIR)/, kputs.o kprintf.o khexdump.o memcpy.o __just_aeabi_things.o)
 
 $(OBJDIR)/%.o : src/%.s

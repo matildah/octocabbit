@@ -42,7 +42,7 @@ image.bin : image.elf
 image.elf :  $(addprefix $(OBJDIR)/, startup.o swi.o vectors.o dumpregs.o switch.o main.o)  $(OBJDIR)/libkyubey.a
 	$(LD) $(LDFLAGS) $^ $(LIBRARIES) -o $@
 
-$(OBJDIR)/libkyubey.a : $(addprefix $(OBJDIR)/, kputs.o kprintf.o khexdump.o memcpy.o)
+$(OBJDIR)/libkyubey.a : $(addprefix $(OBJDIR)/, kputs.o kprintf.o khexdump.o memcpy.o __just_aeabi_things.o)
 	$(AR) rv $@ $^
 
 clean:

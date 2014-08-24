@@ -14,10 +14,6 @@
  * USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include <stddef.h>
-#include <kstring.h>
 
-void
-__aeabi_memcpy(void *dest, void *src, size_t n) { 
-    memcpy(dest, src, n);
-}
+
+void * memcpy(void *dest, const void *src, size_t n);

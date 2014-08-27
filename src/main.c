@@ -1,11 +1,9 @@
 #include <stdint.h>
 #include <uart.h>
-void c_entry() 
+
+void c_entry(void) 
 {
-    uint32_t vbar, sctlr;
-    __asm__ __volatile__("mrc p15, 0, %0, c12, c0, 0\n" : "=r" (vbar) : : );
-    __asm__ __volatile__("mrc p15, 0, %0, c1, c0, 0\n" : "=r" (sctlr) : : );
-    kprintf("vectors are at %p and sctlr is %p and idk why\n", vbar, sctlr);
+    kprintf("moo\n");
     return;
     uint32_t forkres = 0xfeedface;
     kprintf("entered c_entry\n");

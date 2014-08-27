@@ -11,7 +11,7 @@ ASFLAGS=-g
 LDFLAGS=-T src/kernel.ld -L$(OBJDIR)/
 
 LIBRARIES=
-KOBJ=$(addprefix $(OBJDIR)/, startup.o swi.o vectors.o dumpregs.o switch.o main.o) $(OBJDIR)/libkyubey.a
+KOBJ=$(addprefix $(OBJDIR)/, startup.o swi.o vectors.o dumpregs.o switch.o main.o cp15_regs.o) $(OBJDIR)/libkyubey.a
 LOBJ=$(addprefix $(OBJDIR)/, kputs.o kprintf.o khexdump.o memcpy.o __just_aeabi_things.o)
 
 $(OBJDIR)/%.o : src/%.s

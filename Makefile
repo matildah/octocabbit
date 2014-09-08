@@ -1,8 +1,8 @@
 OBJDIR=obj
 
 AS=arm-none-eabi-as
-CC=clang -c -target arm-none-eabi -integrated-as -ffreestanding -nostdlib -fno-builtin
-LD=clang -target arm-none-eabi -integrated-as -arch arm -ffreestanding -nostdlib -fno-builtin
+CC=clang -c -target arm-none-eabi -integrated-as -ffreestanding -nostdlib -fno-builtin -nostdinc
+LD=clang -target arm-none-eabi -integrated-as -arch arm -ffreestanding -nostdlib -fno-builtin -nostdinc
 OBJCOPY=arm-none-eabi-objcopy
 
 CPU=cortex-a8

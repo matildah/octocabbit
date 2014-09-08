@@ -8,7 +8,7 @@ OBJCOPY=arm-none-eabi-objcopy
 CPU=cortex-a8
 CFLAGS=-g -Iinclude/ -Wall
 ASFLAGS=-g
-LDFLAGS=-T src/kernel.ld -L$(OBJDIR)/
+LDFLAGS=-T src/kernel.lds -L$(OBJDIR)/
 
 LIBRARIES=
 KOBJ=$(addprefix $(OBJDIR)/, startup.o swi.o vectors.o dumpregs.o switch.o main.o cp15_regs.o) $(OBJDIR)/libkyubey.a

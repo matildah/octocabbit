@@ -5,15 +5,52 @@ KERNEL_OFFSET = KERNEL_BASE - PHYS_BASE;
 ENTRY(asm_entry)
 SECTIONS
 {
-    . = KERNEL_BASE;
+    . = PHYS_BASE;
 
-    .startup : { obj/startup.o(.text) }
-    .text : { *(.text) }
-    .data : { *(.data) }
-    .bss : { *(.bss COMMON) }
-    . = ALIGN(8);
-    . = . + 0x1000; /* 4 kB for supervisor stack */
-    svc_stack = .;
-    . = . + 0x1000; /* 4 kB for user stack */
-    usr_stack = .;
+    .boot . :
+    {
+        *(.boot.text)
+        *(.boot.rodata)
+        *(.boot.data)
+        . = ALIGN(64K);
+    }
+
+    . = . + KERNEL_OFFSET;
+
+    .text . : AT(ADDR(.text) - KERNEL_OFFSET)
+    {
+        . = ALIGN(64K);
+        *(.vectors)
+        *(.vectors.text)
+        *(.text)
+    }
+    .rodata . : AT(ADDR(.rodata) - KERNEL_OFFSET)
+    {
+        *(.rodata)
+        *(.rodata.*)
+    }
+
+    .data . : AT(ADDR(.data) - KERNEL_OFFSET)
+    {
+        *(.data)
+        . = ALIGN(8);
+        . = . + 0x1000;
+        svc_stack = .;
+        . = . + 0x1000;
+        usr_stack = .;
+    }
+
+    .bss . : AT(ADDR(.bss) - KERNEL_OFFSET)
+    {
+        *(.bss)
+        *(COMMON)
+    }
+
+    /DISCARD/ :
+    {
+        *(.note.gnu.build-id)
+        *(.comment)
+        *(.ARM.attributes)
+    }
+
 }

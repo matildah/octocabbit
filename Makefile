@@ -6,8 +6,8 @@ LD=clang -target arm-none-eabi -integrated-as -arch arm -ffreestanding -nostdlib
 OBJCOPY=arm-none-eabi-objcopy
 
 CPU=cortex-a8
-CFLAGS=-g -Iinclude/ -Wall
-ASFLAGS=-g
+CFLAGS=-Iinclude/ -Wall
+ASFLAGS=
 LDFLAGS=-T src/kernel.lds -L$(OBJDIR)/
 
 LIBRARIES=

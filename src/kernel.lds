@@ -15,6 +15,9 @@ SECTIONS
         . = . + 4K;
         . = ALIGN(8);
         _boot_stack = .;
+        . = ALIGN(16384);
+        _boot_pd = .;
+        . = . + 16384;
     }
 
     . = . + KERNEL_OFFSET;

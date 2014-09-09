@@ -1,4 +1,4 @@
-octocabbit -- Matilda's attempt at making a microkernel for ARM (Cortex-A8 AM335x)
+octocabbit -- Kia's attempt at making a microkernel for ARM (Cortex-A8 AM335x)
 
 to make the kernel, run "make".
 

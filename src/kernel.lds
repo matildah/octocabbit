@@ -12,7 +12,6 @@ SECTIONS
         *(.boot.text)
         *(.boot.rodata)
         *(.boot.data)
-        . = ALIGN(64K);
     }
 
     . = . + KERNEL_OFFSET;

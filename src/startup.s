@@ -23,7 +23,7 @@
  * USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-.section .text
+.section .boot.text
 .global asm_entry
 asm_entry:
     b stackshit
@@ -43,9 +43,9 @@ vector_copy_loop:
     /* set up supervisor mode stack and user mode stack */
 stackshit:
     ldr sp, =svc_stack
-    bl c_entry
-    msr CPSR_c, #0xd0
-    ldr sp, =usr_stack
+    ldr pc, =c_entry
+/*    msr CPSR_c, #0xd0
+    ldr sp, =usr_stack */
     b .
 
 _undef_inst:

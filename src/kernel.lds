@@ -35,14 +35,13 @@ SECTIONS
         . = ALIGN(8);
         . = . + 0x1000;
         svc_stack = .;
-        . = . + 0x1000;
-        usr_stack = .;
     }
 
     .bss . : AT(ADDR(.bss) - KERNEL_OFFSET)
     {
         *(.bss)
         *(COMMON)
+        *(.bss.aligned)
     }
 
     /DISCARD/ :

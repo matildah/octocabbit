@@ -16,11 +16,20 @@
 
 #ifndef __LINKER_H
 #define __LINKER_H
+
+#define BIT(n) (1ul<<(n))
+
 #define SECTION(sec) __attribute__((__section__(sec)))
+#define ALIGN(n)     __attribute__((__aligned__(n)))
+
 
 #define BOOT_CODE SECTION(".boot.text")
 #define BOOT_RODATA SECTION(".boot.rodata")
 #define BOOT_DATA SECTION(".boot.data")
+#define ALIGN_BSS(n) ALIGN(n) SECTION(".bss.aligned")
+
+
+
 
 #endif
 

@@ -3,6 +3,7 @@
 
 void c_entry(void) 
 {
+    dump_cp15_regs();
     kprintf("moo\n");
     return;
     uint32_t forkres = 0xfeedface;

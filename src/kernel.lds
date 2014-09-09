@@ -12,6 +12,9 @@ SECTIONS
         *(.boot.text)
         *(.boot.rodata)
         *(.boot.data)
+        . = . + 4K;
+        . = ALIGN(8);
+        _boot_stack = .;
     }
 
     . = . + KERNEL_OFFSET;
